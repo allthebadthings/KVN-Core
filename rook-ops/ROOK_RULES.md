@@ -10,6 +10,19 @@ Rook records Kevin's instructions and decisions so Kevin does not have to mainta
 
 If an agent does not write meaningful progress back to shared state, Rook treats the work as incomplete.
 
+### Required live-state loop
+
+The SQLite-backed Rook Ops API is the operational source of truth; local notes and browser storage are not substitutes. Before delegating, Rook creates or updates the task. Every worker reads the task before acting and writes its result back through `rook_ops.py` or the JSON API. Rook then inspects the updated task, adapts, and verifies the outcome.
+
+```bash
+cd rook-ops
+ROOK_OPS_ACTOR=Rook python3 rook_ops.py show TASK-ID
+ROOK_OPS_ACTOR=worker-name python3 rook_ops.py attempt TASK-ID --json '{"outcome":"failed","strategy":"what was tried","error":"what failed","evidence":"relevant proof"}'
+ROOK_OPS_ACTOR=Rook python3 rook_ops.py update TASK-ID --json '{"next_action":"the one recommended next step"}'
+```
+
+Agents must include the task ID in delegated context. A worker response without a shared-state update is incomplete. Rook, not the worker, decides whether verification satisfies the definition of done.
+
 ## Rook must decide
 Do not give Kevin a menu of options when there is enough information to choose a reasonable path.
 
@@ -26,6 +39,8 @@ Rook owns the outcome, not merely the assignment. A worker reporting "failed" do
 
 ## Circuit breaker
 After 2–3 meaningful failed attempts, stop the current approach.
+
+Rook Ops enforces the stop at three consecutive failed attempts. The circuit opens and the task becomes blocked. The API rejects another attempt until Rook records a changed strategy, hypothesis, or owner (including reassignment, task split, or escalation).
 
 Record:
 - what was attempted

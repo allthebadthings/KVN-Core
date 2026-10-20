@@ -2,22 +2,36 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Rook Ops Task",
   "type": "object",
-  "required": ["id", "title", "owner", "priority", "status", "attempts", "next_action"],
+  "required": ["id", "title", "owner", "priority", "status", "next_action", "version"],
   "properties": {
-    "id": {"type": "string"},
+    "id": {"type": "string", "minLength": 1},
     "title": {"type": "string", "minLength": 1},
     "objective": {"type": "string"},
-    "owner": {"type": "string"},
+    "owner": {"type": "string", "minLength": 1},
     "priority": {"enum": ["high", "medium", "low"]},
     "status": {"enum": ["todo", "in_progress", "blocked", "approval", "done"]},
-    "attempts": {"type": "integer", "minimum": 0},
-    "cost": {"type": "number", "minimum": 0},
     "blocker": {"type": "string"},
     "hypothesis": {"type": "string"},
-    "next_action": {"type": "string"},
+    "strategy": {"type": "string"},
+    "next_action": {"type": "string", "minLength": 1},
     "approval_required": {"type": "boolean"},
+    "approval_detail": {"type": "string"},
     "definition_of_done": {"type": "string"},
-    "updated_at": {"type": "string"}
+    "verification": {"type": "string"},
+    "outcome": {"type": "string"},
+    "cost_micros": {"type": "integer", "minimum": 0},
+    "credits_used_micros": {"type": "integer", "minimum": 0},
+    "failed_attempts": {"type": "integer", "minimum": 0},
+    "circuit_open": {"type": "boolean"},
+    "version": {"type": "integer", "minimum": 1},
+    "created_at": {"type": "string"},
+    "updated_at": {"type": "string"},
+    "attempts": {"type": "array", "items": {"type": "object"}}
   },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "blocked"}}}, "then": {"properties": {"blocker": {"minLength": 1}}}},
+    {"if": {"properties": {"status": {"const": "done"}}}, "then": {"properties": {"verification": {"minLength": 1}}}},
+    {"if": {"properties": {"approval_required": {"const": true}}}, "then": {"properties": {"approval_detail": {"minLength": 1}}}}
+  ],
   "additionalProperties": true
 }
