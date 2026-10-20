@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rook Ops</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">KVN LTD · OPERATIONS</p>
+      <h1>Rook Ops</h1>
+      <p class="sub">Shared state for decisions, delegation, blockers, retries, approvals, and outcomes.</p>
+    </div>
+    <div class="top-actions">
+      <button id="resetBtn" class="ghost">Reset sample</button>
+      <button id="newTaskBtn">New task</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="metrics" id="metrics"></section>
+
+    <section class="toolbar">
+      <input id="searchInput" type="search" placeholder="Search tasks, owners, blockers…" />
+      <select id="filterSelect">
+        <option value="all">All statuses</option>
+        <option value="todo">To do</option>
+        <option value="in_progress">In progress</option>
+        <option value="blocked">Blocked</option>
+        <option value="approval">Needs approval</option>
+        <option value="done">Done</option>
+      </select>
+    </section>
+
+    <section id="board" class="board"></section>
+  </main>
+
+  <dialog id="taskDialog">
+    <form method="dialog" id="taskForm">
+      <div class="dialog-head">
+        <h2>Add task</h2>
+        <button value="cancel" class="icon-btn" aria-label="Close">×</button>
+      </div>
+      <label>Title<input id="taskTitle" required /></label>
+      <label>Owner<input id="taskOwner" placeholder="Rook / Coding / Marketing" /></label>
+      <label>Priority<select id="taskPriority"><option>high</option><option selected>medium</option><option>low</option></select></label>
+      <label>Status<select id="taskStatus"><option value="todo">To do</option><option value="in_progress">In progress</option><option value="blocked">Blocked</option><option value="approval">Needs approval</option><option value="done">Done</option></select></label>
+      <label>Next action<textarea id="taskNext" rows="3"></textarea></label>
+      <menu><button value="cancel" class="ghost">Cancel</button><button id="saveTaskBtn" value="default">Save task</button></menu>
+    </form>
+  </dialog>
+
+  <template id="taskTemplate">
+    <article class="task-card">
+      <div class="task-meta"><span class="priority"></span><span class="owner"></span></div>
+      <h3></h3>
+      <p class="next"></p>
+      <div class="task-footer"><span class="attempts"></span><span class="cost"></span></div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
