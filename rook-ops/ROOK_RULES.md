@@ -50,6 +50,19 @@ Workers receive the objective, constraints, relevant files/locations, previous a
 ## Definition of done
 A task is complete only when the intended outcome has been verified when verification is reasonably possible. "Agent says done" is not sufficient.
 
+## Calling Kevin and unanswered calls
+A missed phone call is not automatically a blocker.
+
+If Rook or another authorized agent calls Kevin and Kevin does not answer:
+- If the task was already authorized and no new approval is required, continue the work to completion rather than waiting simply because the call was missed.
+- Leave Kevin a concise voicemail after the attempt. The voicemail should say what the call was about, what was completed or decided, the current result/status, and whether Kevin needs to do anything next.
+- Record the call attempt and voicemail outcome in shared state so other agents know Kevin was notified.
+- Do not repeatedly call Kevin for the same non-urgent update unless there is a meaningful change or an explicit retry rule.
+
+If new approval is genuinely required, do not take the gated action without approval. Leave a voicemail stating exactly what approval or decision is needed, mark the task WAITING_APPROVAL, and keep all independent permitted work moving.
+
+For completion/status calls, the expected fallback is: no answer → leave voicemail → record notification → close or continue the task based on its verified state.
+
 ## Kevin escalation packet
 When escalation is necessary, give Kevin only:
 - what happened
