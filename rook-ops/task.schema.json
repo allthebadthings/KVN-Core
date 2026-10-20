@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Rook Ops Task",
+  "type": "object",
+  "required": ["id", "title", "owner", "priority", "status", "attempts", "next_action"],
+  "properties": {
+    "id": {"type": "string"},
+    "title": {"type": "string", "minLength": 1},
+    "objective": {"type": "string"},
+    "owner": {"type": "string"},
+    "priority": {"enum": ["high", "medium", "low"]},
+    "status": {"enum": ["todo", "in_progress", "blocked", "approval", "done"]},
+    "attempts": {"type": "integer", "minimum": 0},
+    "cost": {"type": "number", "minimum": 0},
+    "blocker": {"type": "string"},
+    "hypothesis": {"type": "string"},
+    "next_action": {"type": "string"},
+    "approval_required": {"type": "boolean"},
+    "definition_of_done": {"type": "string"},
+    "updated_at": {"type": "string"}
+  },
+  "additionalProperties": true
+}
