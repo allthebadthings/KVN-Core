@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "id": "ROOK-001",
+      "title": "Stand up shared operations state",
+      "objective": "Give Rook and worker agents one inspectable source of operational truth.",
+      "owner": "Rook",
+      "priority": "high",
+      "status": "in_progress",
+      "attempts": 1,
+      "cost": 0,
+      "blocker": "",
+      "hypothesis": "A mandatory shared state plus explicit circuit breakers will reduce hidden retry loops and wasted credits.",
+      "next_action": "Validate the board structure and assign current work owners.",
+      "approval_required": false,
+      "definition_of_done": "Rook and workers can read/write task state and Kevin can inspect it."
+    }
+  ]
+}
